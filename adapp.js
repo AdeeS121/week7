@@ -110,9 +110,7 @@ function getRunningTransactions() {
       let output = "";
       output += `<h3>${runningTransaction.currentTransactionsMsg}</h3>
       <div>${runningTransaction.currentTotalAndCashOrCreditPay}</div>`
-      // <div> ${runningTransaction.currentTotal}\n, ${runningTransaction.currentCashSelect}/${runningTransaction.currentCreditSelect}</div>
-      
-
+     
       document.getElementById("running-transactions").innerHTML = output;
     } else {
       document.getElementById("running-transactions").innerHTML = "Not Found";
