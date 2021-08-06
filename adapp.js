@@ -1,14 +1,14 @@
-// window.addEventListener("load", title);
-// window.addEventListener("load", getGreeting);
-// window.addEventListener("load", getOptions);
-// window.addEventListener("load", getFood);
-// window.addEventListener('load', getPayment)
+window.addEventListener("load", title);
+window.addEventListener("load", getGreeting);
+window.addEventListener("load", getOptions);
+window.addEventListener("load", getFood);
+window.addEventListener('load', getPayment);
 window.addEventListener('load', getRunningTransactions)
-// window.addEventListener('load', getEndingTransactions)
+window.addEventListener('load', getEndingTransactions)
 
 function title() {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost:3000/greeting", true);
+  
   xhr.onload = function () {
     if (xhr.status == 200) {
       document.getElementById("title").innerHTML = xhr.responseText;
@@ -16,6 +16,7 @@ function title() {
       document.getElementById("title").innerHTML = "Not Found";
     }
   };
+  xhr.open("GET", "http://localhost:3000/greeting", true);
   xhr.send();
 }
 
@@ -67,6 +68,7 @@ function getFood() {
         "<li>" + foodOptions.foodOption3 + "</li>" +
         "<li>" + foodOptions.foodOption4 + "</li>" +
         "</ul>" +
+        ///////////// MAKE ADJUSTMENT HERE DONT FORGET /////////////////////////
         "<h2>Select an item:</h2>" +
         "<h2>~~ You add a ~~</h2>"
       document.getElementById("food").innerHTML = output;
@@ -83,13 +85,14 @@ function getPayment() {
   xhr.onload = function () {
     if (xhr.status == 200) {
       const payOptions = JSON.parse(xhr.response);
+      console.log(payOptions)
       let output = "";
       output += "<h1>" +payOptions.paymentSectionMsg+ "</h1>" +
       "<h1>" +payOptions.startPayMsg+ "</h1>" +
+      "<h2>" + payOptions.paymentTotal + "</h2>" +
       "<ul>" + 
-        "<h2>" + payOptions.paymentTotal + "</h2>" +
         "<li>" + payOptions.paymentCash + "</li>" +
-        "<li>" + payOptions.paymentCredit + "</li>\n" +
+        "<li>" + payOptions.paymentCredit + "</li>" +
         "<li>" + payOptions.paymentChoiceSelection + "</li>" +
         "<li>" + payOptions.paymentSelectionMsg + "</li>" +
         "</ul>" 
@@ -108,11 +111,8 @@ function getRunningTransactions() {
     console.log(xhr.response)
     if (xhr.status == 200) {
 const runningTransaction = JSON.parse(xhr.response)
-let output = [{}];
+let output = "";
 output += "<div>" +runningTransaction.currentTotal+ " , " + runningTransaction.currentCashSelect+ "/" + runningTransaction.currentCreditSelect+ "</div>"
-
-// currentRunningTransactions.currentCashSelect+ currentRunningTransactions.currentCreditSelect+ "</div>"
-// output += "<div>" +currentRunningTransactions.currentTotal + currentRunningTransactions.currentCashSelect+ currentRunningTransactions.currentCreditSelect+ "</div>"
       document.getElementById("running-transactions").innerHTML = output;
     } else {
       document.getElementById("running-transactions").innerHTML = "Not Found";
@@ -122,17 +122,28 @@ output += "<div>" +runningTransaction.currentTotal+ " , " + runningTransaction.c
   xhr.send();
 };
 
-// function getEndingTransactions() {
-//   let xhr = new XMLHttpRequest();
-//   xhr.open("GET", "http://localhost:3000/endingTransactions", true);
-//   xhr.onload = function () {
-//     if (xhr.status == 200) {
-//       document.getElementById("ending-transactions").innerHTML = xhr.responseText;
-//     } else {
-//       document.getElementById("ending-transactions").innerHTML = "Not Found";
-//     }
-//   };
-//   xhr.send();
-// };
+function getEndingTransactions() {
+  let xhr = new XMLHttpRequest();
+
+  xhr.onload = function () {
+    console.log(xhr.response)
+    if (xhr.status == 200) {
+      const finalTransactions = JSON.parse(xhr.response)
+      let output = "";
+      output += "<h1>" +finalTransactions.endingDayIsOverMsg+ "</h1>" +
+      "<h1>" +finalTransactions.endingCongratsMsg+ "</h1>" +
+      "<h2>" + finalTransactions.endingNumberOfTransactions + "</h2>" +
+      "<h2>" + finalTransactions.endingTotalSales + "</h2>" +
+      "<h2>" + finalTransactions.endingFarewell + "</h2>" 
+      
+      document.getElementById("ending-transactions").innerHTML = output;
+    } else {
+      document.getElementById("ending-transactions").innerHTML = "Not Found";
+    }
+  };
+    xhr.open("GET", "http://localhost:3000/endingTransactions", true);
+  xhr.send();
+};
 
 
+// ************ PRACTICE FILES BELOW **************** //
