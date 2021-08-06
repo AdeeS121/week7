@@ -2,13 +2,12 @@ window.addEventListener("load", title);
 window.addEventListener("load", getGreeting);
 window.addEventListener("load", getOptions);
 window.addEventListener("load", getFood);
-window.addEventListener('load', getPayment);
-window.addEventListener('load', getRunningTransactions)
-window.addEventListener('load', getEndingTransactions)
+window.addEventListener("load", getPayment);
+window.addEventListener("load", getRunningTransactions);
+window.addEventListener("load", getEndingTransactions);
 
 function title() {
   const xhr = new XMLHttpRequest();
-  
   xhr.onload = function () {
     if (xhr.status == 200) {
       document.getElementById("title").innerHTML = xhr.responseText;
@@ -39,15 +38,15 @@ function getOptions() {
     if (xhr.status == 200) {
       const transOptions = JSON.parse(xhr.response);
       let output = "";
-      output += "<h1>" +transOptions.selectTransactionMessage+ "</h1>" +
-      "<ul>" +
-        "<li>" + transOptions.startTransaction + "</li>" +
-        "<li>" + transOptions.currentTransaction + "</li>" +
-        "<li>" + transOptions.exitTransaction + "</li>" +
-        "</ul>" 
-         document.getElementById('options').innerHTML = output;
+      output += `<h3>${transOptions.selectTransactionMessage}</h3>
+      <ul>
+        <li>${transOptions.startTransaction}</li>
+        <li>${transOptions.currentTransaction}</li>
+        <li>${transOptions.exitTransaction}</li>
+        </ul>`;
+      document.getElementById("options").innerHTML = output;
     } else {
-      document.getElementById("options").innerHTML = "Error"
+      document.getElementById("options").innerHTML = "Error";
     }
   };
   xhr.open("GET", "http://localhost:3000/options", true);
@@ -58,19 +57,16 @@ function getFood() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      console.log(xhr.response)
       const foodOptions = JSON.parse(xhr.response);
       let output = "";
-      output += "<h1>" +foodOptions.foodOptionSelectMsg+ "</h1>" +
-      "<ul>" +
-        "<li>" + foodOptions.foodOption1 + "</li>" + 
-        "<li>" + foodOptions.foodOption2 + "</li>" +
-        "<li>" + foodOptions.foodOption3 + "</li>" +
-        "<li>" + foodOptions.foodOption4 + "</li>" +
-        "</ul>" +
-        ///////////// MAKE ADJUSTMENT HERE DONT FORGET /////////////////////////
-        "<h2>Select an item:</h2>" +
-        "<h2>~~ You add a ~~</h2>"
+      output += `<h3>${foodOptions.foodOptionSelectMsg}</h3>
+      <ul>
+      <li>${foodOptions.foodOption1}</li>
+      <li>${foodOptions.foodOption2}</li> 
+      <li>${foodOptions.foodOption3}</li> 
+      <li>${foodOptions.foodOption4}</li>
+        </ul>  
+        <h4>~~ You add a ~~</h4>`;
       document.getElementById("food").innerHTML = output;
     } else {
       document.getElementById("food").innerHTML = "Error";
@@ -85,34 +81,38 @@ function getPayment() {
   xhr.onload = function () {
     if (xhr.status == 200) {
       const payOptions = JSON.parse(xhr.response);
-      console.log(payOptions)
       let output = "";
-      output += "<h1>" +payOptions.paymentSectionMsg+ "</h1>" +
-      "<h1>" +payOptions.startPayMsg+ "</h1>" +
-      "<h2>" + payOptions.paymentTotal + "</h2>" +
-      "<ul>" + 
-        "<li>" + payOptions.paymentCash + "</li>" +
-        "<li>" + payOptions.paymentCredit + "</li>" +
-        "<li>" + payOptions.paymentChoiceSelection + "</li>" +
-        "<li>" + payOptions.paymentSelectionMsg + "</li>" +
-        "</ul>" 
+      output += `<h3>${payOptions.paymentSectionMsg}</h3>
+      <h4>${payOptions.startPayMsg}</h4>
+      <h3>${payOptions.paymentTotal}</h3>
+      <h3>${payOptions.startPayMethod}</h3>
+      <ul>
+      <h4>${payOptions.paymentCash}</h4>
+      <h4>${payOptions.paymentCredit}</h4>
+      <h4>${payOptions.paymentChoiceSelection}</h4>
+      <h4>${payOptions.paymentSelectionMsg}</h4>
+      </ul>`;
       document.getElementById("payment").innerHTML = output;
     } else {
       document.getElementById("payment").innerHTML = "Error";
     }
   };
-    xhr.open("GET", "http://localhost:3000/payment", true);
+  xhr.open("GET", "http://localhost:3000/payment", true);
   xhr.send();
-};
+}
 
 function getRunningTransactions() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
-    console.log(xhr.response)
     if (xhr.status == 200) {
-const runningTransaction = JSON.parse(xhr.response)
-let output = "";
-output += "<div>" +runningTransaction.currentTotal+ " , " + runningTransaction.currentCashSelect+ "/" + runningTransaction.currentCreditSelect+ "</div>"
+      console.log(xhr.response)
+      const runningTransaction = JSON.parse(xhr.response);
+      let output = "";
+      output += `<h3>${runningTransaction.currentTransactionsMsg}</h3>
+      <div>${runningTransaction.currentTotalAndCashOrCreditPay}</div>`
+      // <div> ${runningTransaction.currentTotal}\n, ${runningTransaction.currentCashSelect}/${runningTransaction.currentCreditSelect}</div>
+      
+
       document.getElementById("running-transactions").innerHTML = output;
     } else {
       document.getElementById("running-transactions").innerHTML = "Not Found";
@@ -120,30 +120,24 @@ output += "<div>" +runningTransaction.currentTotal+ " , " + runningTransaction.c
   };
   xhr.open("GET", "http://localhost:3000/runningTransactions", true);
   xhr.send();
-};
+}
 
 function getEndingTransactions() {
   let xhr = new XMLHttpRequest();
-
   xhr.onload = function () {
-    console.log(xhr.response)
     if (xhr.status == 200) {
-      const finalTransactions = JSON.parse(xhr.response)
+      const finalTransactions = JSON.parse(xhr.response);
       let output = "";
-      output += "<h1>" +finalTransactions.endingDayIsOverMsg+ "</h1>" +
-      "<h1>" +finalTransactions.endingCongratsMsg+ "</h1>" +
-      "<h2>" + finalTransactions.endingNumberOfTransactions + "</h2>" +
-      "<h2>" + finalTransactions.endingTotalSales + "</h2>" +
-      "<h2>" + finalTransactions.endingFarewell + "</h2>" 
-      
+      output += `<h3>${finalTransactions.endingDayIsOverMsg}</h3>
+      <h4>${finalTransactions.endingCongratsMsg}</h4>
+      <h4>${finalTransactions.endingNumberOfTransactions}</h4>
+      <h4>${finalTransactions.endingTotalSales}</h4>
+      <h4>${finalTransactions.endingFarewell}</h4>`;
       document.getElementById("ending-transactions").innerHTML = output;
     } else {
       document.getElementById("ending-transactions").innerHTML = "Not Found";
     }
   };
-    xhr.open("GET", "http://localhost:3000/endingTransactions", true);
+  xhr.open("GET", "http://localhost:3000/endingTransactions", true);
   xhr.send();
-};
-
-
-// ************ PRACTICE FILES BELOW **************** //
+}
