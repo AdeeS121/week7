@@ -83,12 +83,12 @@ function getPayment() {
       const payOptions = JSON.parse(xhr.response);
       let output = "";
       output += `<h3>${payOptions.paymentSectionMsg}</h3><br><br>
-      <h4>${payOptions.startPayMsg}</h4>
+      <h4>${payOptions.startPayMsg}</h4><br>
       <h3>${payOptions.paymentTotal}</h3>
-      <h3>${payOptions.startPayMethod}</h3>
+      <h3>${payOptions.startPayMethod}</h3><br>
       <ul>
       <h4>${payOptions.paymentCash}</h4>
-      <h4>${payOptions.paymentCredit}</h4>
+      <h4>${payOptions.paymentCredit}</h4><br>
       <h4>${payOptions.paymentChoiceSelection}</h4>
       <h4>${payOptions.paymentSelectionMsg}</h4>
       </ul>`;
@@ -107,7 +107,7 @@ function getRunningTransactions() {
     if (xhr.status == 200) {
       const runningTransaction = JSON.parse(xhr.response);
       let output = "";
-      output += `<h3>${runningTransaction.currentTransactionsMsg}</h3>
+      output += `<h3>${runningTransaction.currentTransactionsMsg}</h3><br>
       <div>${runningTransaction.currentTotalAndCashOrCreditPay}</div>`
      
       document.getElementsByClassName("running-transactions")[0].innerHTML = output;
