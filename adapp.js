@@ -1,4 +1,4 @@
-window.addEventListener("load", title);
+window.addEventListener("load", getTitle);
 window.addEventListener("load", getGreeting);
 window.addEventListener("load", getOptions);
 window.addEventListener("load", getFood);
@@ -6,11 +6,11 @@ window.addEventListener("load", getPayment);
 window.addEventListener("load", getRunningTransactions);
 window.addEventListener("load", getEndingTransactions);
 
-function title() {
+function getTitle() {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      document.getElementsByClassName("title")[0].innerHTML = xhr.responseText;
+      document.getElementsByClassName("title")[0].innerHTML = xhr.response;
     } else {
       document.getElementsByClassName("title")[0].innerHTML = "Not Found";
     }
@@ -66,7 +66,7 @@ function getFood() {
       <li>${foodOptions.foodOption3}</li> 
       <li>${foodOptions.foodOption4}</li>
         </ul>  
-        <h4>~~ You add a ~~</h4>`;
+        <h4>${foodOptions.foodAddedMsg}</h4>`
       document.getElementsByClassName("food")[0].innerHTML = output;
     } else {
       document.getElementsByClassName("food")[0].innerHTML = "Error";

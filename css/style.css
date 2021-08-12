@@ -6,50 +6,44 @@
 }
 
 body {
-  background-color: #F1BC31;
+  background-color: #f1bc31;
   font-family: sans-serif;
   font-size: 10px;
   width: 100%;
   min-height: 100vh;
 }
 
-/* [class ^="section-"] {
-  background-color: yellowgreen;
-  display: grid;
-  place-items: center;
-} */
-
 .container {
   display: grid;
   height: 100vh;
   gap: 50px 20px;
-  place-items: center; 
-  grid-template-areas: 
-  "A A A A    A A A A    A A A A"
-  "B B B B    B B C C    C C C C "
-  "D D D D    D D D D    D D D D"
-  "E E E E    E E E E    E E E E "
-  "F F F F    F F F F    F F F F";
+  place-items: center;
+  grid-template-areas:
+    "A A A A    A A A A    A A A A"
+    "B B B B    B B C C    C C C C "
+    "D D D D    D D D D    D D D D"
+    "E E E E    E E E E    E E E E "
+    "F F F F    F F F F    F F F F";
 }
 
-.welcome, .multicolortext {
+.welcome,
+.multicolortext {
   grid-area: A;
   justify-self: center;
-  /* background-color: #B22222; */
-  font-family: 'Palette Mosaic', cursive;
+  font-family: "Palette Mosaic", cursive;
   font-size: 60px;
   padding: 40px;
   margin: 30px;
-  background-image: linear-gradient(to left, #7C0A02, #B22222, #E25822);
+  background-image: linear-gradient(to left, #7c0a02, #b22222, #e25822);
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
   color: transparent;
 }
- 
+
 .options {
   grid-area: B;
-  background-color: #B22222;
+  background-color: #b22222;
   padding: 50px;
   border: 5px solid black;
   border-radius: 10px;
@@ -57,38 +51,38 @@ body {
 
 .food {
   grid-area: C;
-  background-color: #B22222;
+  background-color: #b22222;
   padding: 50px;
   border: 5px solid black;
   border-radius: 10px;
 }
 
 .running-transactions {
-grid-area: D;
-background-color: #B22222;
-color: #F1BC31;
-padding: 25px;
-border: 5px solid black;
-border-radius: 10px;
-text-align: center;
+  grid-area: D;
+  background-color: #b22222;
+  color: #f1bc31;
+  padding: 25px;
+  border: 5px solid black;
+  border-radius: 10px;
+  text-align: center;
 }
 
 .payment {
-grid-area: E;
-background-color: #B22222;
-padding: 50px;
-border: 5px solid black;
-border-radius: 10px;
-text-align: center;
+  grid-area: E;
+  background-color: #b22222;
+  padding: 50px;
+  border: 5px solid black;
+  border-radius: 10px;
+  text-align: center;
 }
 
 .ending-transactions {
-grid-area: F;
-background-color: #B22222;
-padding: 50px;
-border: 5px solid black;
-border-radius: 10px;
-text-align: center;
+  grid-area: F;
+  background-color: #b22222;
+  padding: 50px;
+  border: 5px solid black;
+  border-radius: 10px;
+  text-align: center;
 }
 
 h3 {
@@ -97,11 +91,10 @@ h3 {
 
 li {
   list-style: none;
-  color: #F1BC31;
+  color: #f1bc31;
   padding: 20px;
 }
 
 h4 {
-color: #F1BC31
+  color: #f1bc31;
 }
-
