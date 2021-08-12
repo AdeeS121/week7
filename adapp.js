@@ -10,7 +10,9 @@ function getTitle() {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      document.getElementsByClassName("title")[0].innerHTML = xhr.response;
+      const webpageTitle = JSON.parse(xhr.response)
+      let output = `${webpageTitle.welcome}`
+      document.getElementsByClassName("title")[0].innerHTML = output;
     } else {
       document.getElementsByClassName("title")[0].innerHTML = "Not Found";
     }
@@ -22,8 +24,14 @@ function getTitle() {
 function getGreeting() {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
+    console.log(xhr.response)
+    
     if (xhr.status == 200) {
-      document.getElementsByClassName("welcome")[0].innerHTML = xhr.response;
+      const welcomepage = JSON.parse(xhr.response)
+      let output = `
+      <h1>${welcomepage.welcome}</h1>
+      ` ;
+      document.getElementsByClassName("welcome")[0].innerHTML = output;
     } else {
       document.getElementsByClassName("welcome")[0].innerHTML = "Not Found";
     }
