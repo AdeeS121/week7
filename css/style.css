@@ -23,7 +23,7 @@ body {
     "B B B B    B B C C    C C C C "
     "D D D D    D D D D    D D D D"
     "E E E E    E E E E    E E E E "
-    "F F F F    F F F F    F F F F";
+    "F F F F    G G G G    H H H H";
 }
 
 .welcome,
@@ -97,4 +97,22 @@ li {
 
 h4 {
   color: #f1bc31;
+}
+
+#button1 {
+  grid-area: G;
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  margin: 50px;
+  padding: 50px;
+}
+
+#message {
+   grid-area: H;
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  margin: 50px;
+  padding: 50px;
 }
