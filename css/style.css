@@ -19,11 +19,44 @@ body {
   gap: 50px 20px;
   place-items: center;
   grid-template-areas:
-    "A A A A    A A A A    A A A A"
-    "B B B B    B B C C    C C C C "
-    "D D D D    D D D D    D D D D"
-    "E E E E    E E E E    E E E E "
-    "F F F F    G G G G    H H H H";
+  "A A A A    A A A A     A A A A"
+  "B B B B    C C C C     D D D D"
+  "E E E E    E E E E    F F F F"
+  "G G G G   G G G G     G G G G"
+  "H H H H    H H H H    H H H H";
+}
+
+ /* "A A A A    A A A A     A A A A"
+    "B B B B    C C C C     D D D D"
+    "E E E E    E E E E    E E E E"
+    "F F F F    F F F F    F F F F"
+    "G G G G    G G G G    G G G G"; */
+
+#button1 {
+  grid-area: F;
+  background-color: white;
+  width: 200px; 
+  height: 200px;
+  margin: 50px;
+  padding: 5px;
+} 
+
+#button2 {
+  grid-area: g;
+  background-color: white;
+  width: 200px; 
+  height: 200px;
+  margin: 50px;
+  padding: 5px;
+} 
+
+#message {
+  grid-area: A;
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  margin: 50px;
+  padding: 50px;
 }
 
 .welcome,
@@ -50,7 +83,7 @@ body {
 }
 
 .food {
-  grid-area: C;
+  grid-area: D;
   background-color: #b22222;
   padding: 50px;
   border: 5px solid black;
@@ -58,7 +91,7 @@ body {
 }
 
 .running-transactions {
-  grid-area: D;
+  grid-area: E;
   background-color: #b22222;
   color: #f1bc31;
   padding: 25px;
@@ -68,7 +101,7 @@ body {
 }
 
 .payment {
-  grid-area: E;
+  grid-area: G;
   background-color: #b22222;
   padding: 50px;
   border: 5px solid black;
@@ -77,7 +110,7 @@ body {
 }
 
 .ending-transactions {
-  grid-area: F;
+  grid-area: H;
   background-color: #b22222;
   padding: 50px;
   border: 5px solid black;
@@ -89,7 +122,7 @@ h3 {
   font-size: 2rem;
 }
 
-li {
+.ph {
   list-style: none;
   color: #f1bc31;
   padding: 20px;
@@ -98,21 +131,10 @@ li {
 h4 {
   color: #f1bc31;
 }
-
-#button1 {
-  grid-area: G;
-  background-color: white;
-  width: 200px;
-  height: 200px;
-  margin: 50px;
-  padding: 50px;
-}
-
-#message {
-   grid-area: H;
-  background-color: white;
-  width: 200px;
-  height: 200px;
-  margin: 50px;
-  padding: 50px;
-}
+ h2 {
+   color: #f1bc31;
+ }
+  
+ p {
+   background-color: yellow;
+ }
