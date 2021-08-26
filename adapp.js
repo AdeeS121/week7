@@ -79,18 +79,19 @@ function getFood() {
       let output = "";
       output += `     
   <h3>${optionsMessage}</h3>
-   <p>
-  <label for="food1"> <input type="checkbox" name="food" value="${food1}" id="food1" />${food1}</label>
-  </p>
-  <p>
-  <label for="food2"> <input type="checkbox" name="food" value="${food2}" id="food2" />${food2}</label>
-  </p>
-  <p>
-  <label for="food3"> <input type="checkbox" name="food" value="${food3}" id="food3" />${food3}</label>
-  </p>  
-  <p>
-  <label for="food4"> <input type="checkbox" name="food" value="${food4}" id="food4" />${food4}</label>
-  </p>     
+
+
+  <form class="" action="" method="post" enctype="text/plain">
+  <label>${food1}</label>
+<input type="checkbox" id="hotdog" name="hotdog" value=""><br>
+  <label>${food2}</label>
+  <input type="checkbox" id="soda" name="soda" value=""><br>
+  <label>${food3}</label>
+  <input type="checkbox" id="chips" name="chips" value=""><br>
+  <label>${food4}</label>
+  <imput type="submit" name=""</imput>
+  </form>
+   
         `;
 
       document.getElementById("food").innerHTML = output;
@@ -98,21 +99,21 @@ function getFood() {
       document.getElementsByClassName("food").innerHTML = "Error";
     }
 
-      document.getElementById("food1").addEventListener("click", function () {
+      document.getElementById("hotdog").addEventListener("click", function () {
         document.getElementById(
           "message1"
         ).innerHTML = `You added a ${food1.slice(5, 12)}  
           `;
       });
 
-    document.getElementById("food2").addEventListener("click", function () {
+    document.getElementById("soda").addEventListener("click", function () {
       document.getElementById(
         "message1"
-      ).innerHTML = `You added a ${food2.slice(5, 12)}  
+      ).innerHTML = `You added a ${food2.slice(5, 11)}  
           `;
     });
 
-    document.getElementById("food3").addEventListener("click", function () {
+    document.getElementById("chips").addEventListener("click", function () {
       document.getElementById("message1").innerHTML = `You added ${food3.slice(
         5,
         12
@@ -129,12 +130,12 @@ function getPayment() {
   xhr.onload = function () {
     if (xhr.status == 200) {
       const payOptions = JSON.parse(xhr.response);
-      let paySection = payOptions.paymentSectionMsg;
-      let startPayment = payOptions.startPayMsg;
-      let paymentOption = payOptions.startPayMethod;
-      let totalOfTransactions = payOptions.paymentTotal;
-      let payByCash = payOptions.paymentCash;
-      let payByCredit = payOptions.paymentCredit;
+      paySection = payOptions.paymentSectionMsg;
+      startPayment = payOptions.startPayMsg;
+      paymentOption = payOptions.startPayMethod;
+      totalOfTransactions = payOptions.paymentTotal;
+      payByCash = payOptions.paymentCash;
+      payByCredit = payOptions.paymentCredit;
       let paymentMethod = payOptions.paymentChoiceSelection;
       let paymentThanks = payOptions.paymentSelectionMsg;
 
@@ -144,27 +145,27 @@ function getPayment() {
       <h3>${totalOfTransactions}</h3>
       <h3>${paymentOption}</h3><br>
 
-      <p>
-      <label for="cash-payment"><input type="checkbox" name="payment" value="${payByCash}" id="cash-payment" />${payByCash}</label>
-      </p>
-      <p>
-      <label for="credit-payment"><input type="checkbox" name="payment" value="${payByCredit}" id="credit-payment" />${payByCredit}</label>
-      </p>
-      <h4>${paymentMethod}</h4>
-      <h4>${paymentThanks}</h4>
-      
+
+      <form class="" action="" method="post" enctype="text/plain"
+      <label>${payByCash}</label>
+    <input type="checkbox" id="cash" name="cash" value=""><br>
+      <label>${payByCredit}</label>
+      <input type="checkbox" id="credit" name="soda" value=""><br>
+      <imput type="submit" name=""</imput>
+      </form>
+
             `;
       document.getElementsByClassName("payment")[0].innerHTML = output;
     } else {
       document.getElementsByClassName("payment")[0].innerHTML = "Error";
     }
 
-    document.getElementById("cash-payment").addEventListener("click", function() {
-      document.getElementById("message2").innerHTML = ``;
+    document.getElementById("cash").addEventListener("click", function() {
+      document.getElementById("message2").innerHTML = `${payByCash}`;
       
     });
 
-    document.getElementById("cash-payment").addEventListener("click", function() {
+    document.getElementById("credit").addEventListener("click", function() {
       document.getElementById("message2").innerHTML = `${payByCredit}`;
     });
 
