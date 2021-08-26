@@ -51,6 +51,8 @@ function getOptions() {
 
       let output = "";
       output += `<h3>${selectTransaction}</h3>
+
+  
       <h5>${startTransaction}</h5>
       <h5>${currentTransaction}</h5>
       <h5>${exitTransactions}</h5>
@@ -75,6 +77,12 @@ function getFood() {
       food2 = foodOptions.foodOption2;
       food3 = foodOptions.foodOption3;
       food4 = foodOptions.foodOption4;
+
+      choice1 = foodOptions.foodOption1.slice(5, 12);
+      choice2 = foodOptions.foodOption2.slice(5, 11);
+      choice3 = foodOptions.foodOption3.slice(5, 12);
+      choice4 = foodOptions.foodOption4;
+
 
       let output = "";
       output += `     
@@ -102,22 +110,19 @@ function getFood() {
       document.getElementById("hotdog").addEventListener("click", function () {
         document.getElementById(
           "message1"
-        ).innerHTML = `You added a ${food1.slice(5, 12)}  
+        ).innerHTML = `You added a ${choice1}  
           `;
       });
 
     document.getElementById("soda").addEventListener("click", function () {
       document.getElementById(
         "message1"
-      ).innerHTML = `You added a ${food2.slice(5, 11)}  
+      ).innerHTML = `You added a ${choice2}  
           `;
     });
 
     document.getElementById("chips").addEventListener("click", function () {
-      document.getElementById("message1").innerHTML = `You added ${food3.slice(
-        5,
-        12
-      )}
+      document.getElementById("message1").innerHTML = `You added ${choice3}
           `;
     });
   };
@@ -136,8 +141,11 @@ function getPayment() {
       totalOfTransactions = payOptions.paymentTotal;
       payByCash = payOptions.paymentCash;
       payByCredit = payOptions.paymentCredit;
-      let paymentMethod = payOptions.paymentChoiceSelection;
-      let paymentThanks = payOptions.paymentSelectionMsg;
+      paymentMethod = payOptions.paymentChoiceSelection;
+      paymentThanks = payOptions.paymentSelectionMsg;
+
+      cashChoice = payOptions.paymentCash.slice(3);
+      creditChoice = payOptions.paymentCredit.slice(3);
 
       let output = "";
       output += `<h3>${paySection}</h3><br><br>
@@ -150,7 +158,7 @@ function getPayment() {
       <label>${payByCash}</label>
     <input type="checkbox" id="cash" name="cash" value=""><br>
       <label>${payByCredit}</label>
-      <input type="checkbox" id="credit" name="soda" value=""><br>
+      <input type="checkbox" id="credit" name="credit" value=""><br>
       <imput type="submit" name=""</imput>
       </form>
 
@@ -161,12 +169,13 @@ function getPayment() {
     }
 
     document.getElementById("cash").addEventListener("click", function() {
-      document.getElementById("message2").innerHTML = `${payByCash}`;
+      document.getElementById("message2").innerHTML = `You selected ${cashChoice}`;
       
     });
 
     document.getElementById("credit").addEventListener("click", function() {
-      document.getElementById("message2").innerHTML = `${payByCredit}`;
+      document.getElementById("message2").innerHTML = `You selected ${creditChoice}`;
+      console.log(creditChoice)
     });
 
   };
