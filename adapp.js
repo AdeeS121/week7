@@ -6,6 +6,25 @@ window.addEventListener("load", getPayment);
 window.addEventListener("load", getRunningTransactions);
 window.addEventListener("load", getEndingTransactions);
 
+const hide = (elem) => {
+  elem.style.display = "none";
+};
+
+const show = (elem) => {
+  elem.style.display = "block";
+};
+
+const toggle = (elem) => {
+  if (window.getComputedStyle(elem).display !== "none") {
+    hide(elem);
+    return;
+  }
+  show(elem);
+};
+
+hide(document.querySelector("#endingTransactions-section"));
+
+
 function getTitle() {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -39,33 +58,63 @@ function getGreeting() {
   xhr.send();
 }
 
+
+
 function getOptions() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
       const transOptions = JSON.parse(xhr.response);
-      let selectTransaction = transOptions.selectTransactionMessage;
-      let startTransaction = transOptions.startTransaction;
-      let currentTransaction = transOptions.currentTransaction;
-      let exitTransactions = transOptions.exitTransaction;
+      selectTransaction = transOptions.selectTransactionMessage;
+      startTransactions = transOptions.startTransaction;
+      currentTransactions = transOptions.currentTransaction;
+      exitTransactions = transOptions.exitTransaction;
 
       let output = "";
-      output += `<h3>${selectTransaction}</h3>
+      output += `
+      <h3>${selectTransaction}</h3>
+      <div>
+        <form class="" action="" method="post" enctype="text/plain">
 
-  
-      <h5>${startTransaction}</h5>
-      <h5>${currentTransaction}</h5>
-      <h5>${exitTransactions}</h5>
+        <label>${startTransactions}</label>
+      <input type="checkbox" id="start" name="start-transactions" value=""><br>
+
+
+
+        <label>${currentTransactions}</label>
+        <input type="checkbox" id="current" name="current-transactions" value=""><br>
+
+        <label>${exitTransactions}</label>
+        <input type="checkbox" id="exit" name="exit-transacton" value=""><br>
+
+        <input type="submit" name="">
+        </form>
+      </div> 
+
         `;
       document.getElementsByClassName("options")[0].innerHTML = output;
     } else {
       document.getElementsByClassName("options")[0].innerHTML = "Error";
     }
+
+    hide(document.querySelector("#food-section"));
+    document.querySelector("#start").addEventListener("click", showFoodSection);
+    function showFoodSection(event) {
+      show(document.querySelector("#food-section"));
+    }
+
+    hide(document.querySelector("#runningTransactions-section"));
+    document
+      .querySelector("#current")
+      .addEventListener("click", showRunningTransactionsSection);
+    function showRunningTransactionsSection(event) {
+      toggle(document.querySelector("#runningTransactions-section"));
+    }
   };
+
   xhr.open("GET", "http://localhost:3000/options", true);
   xhr.send();
 }
-
 
 function getFood() {
   let xhr = new XMLHttpRequest();
@@ -83,12 +132,12 @@ function getFood() {
       choice3 = foodOptions.foodOption3.slice(5, 12);
       choice4 = foodOptions.foodOption4;
 
-
       let output = "";
       output += `     
-  <h3>${optionsMessage}</h3>
-
-
+ 
+<h3>${optionsMessage}</h3>
+<div id="food-section>  
+ 
   <form class="" action="" method="post" enctype="text/plain">
   <label>${food1}</label>
 <input type="checkbox" id="hotdog" name="hotdog" value=""><br>
@@ -97,27 +146,34 @@ function getFood() {
   <label>${food3}</label>
   <input type="checkbox" id="chips" name="chips" value=""><br>
   <label>${food4}</label>
-  <imput type="submit" name=""</imput>
+  <input type="checkbox" id="startPayment" name="startPayment" value=""><br>
+  <input type="submit" name="">
   </form>
-   
+   </div>
         `;
 
       document.getElementById("food").innerHTML = output;
     } else {
       document.getElementsByClassName("food").innerHTML = "Error";
     }
+ 
+    hide(document.querySelector("#payment-section"));
+    document
+      .querySelector("#startPayment")
+      .addEventListener("click", startPaymentSection);
 
-      document.getElementById("hotdog").addEventListener("click", function () {
-        document.getElementById(
-          "message1"
-        ).innerHTML = `You added a ${choice1}  
+    function startPaymentSection(event) {
+      show(document.querySelector("#payment-section"));
+     hide(document.querySelector("#food-section"));
+    }
+
+    document.getElementById("hotdog").addEventListener("click", function () {
+      document.getElementById("message1").innerHTML = `You added a ${choice1}  
           `;
-      });
+    });
 
     document.getElementById("soda").addEventListener("click", function () {
-      document.getElementById(
-        "message1"
-      ).innerHTML = `You added a ${choice2}  
+      document.getElementById("message1").innerHTML = `You added a ${choice2}  
           `;
     });
 
@@ -148,36 +204,42 @@ function getPayment() {
       creditChoice = payOptions.paymentCredit.slice(3);
 
       let output = "";
-      output += `<h3>${paySection}</h3><br><br>
-      <h4>${startPayment}</h4><br>
+      output += `
+    
+
+<div id="payment-section">  
+
+<h3>${paySection}</h3>
+  <h4>${startPayment}</h4><br>
       <h3>${totalOfTransactions}</h3>
       <h3>${paymentOption}</h3><br>
 
-
-      <form class="" action="" method="post" enctype="text/plain"
+      <form class="" action="" method="post" enctype="text/plain"> 
       <label>${payByCash}</label>
     <input type="checkbox" id="cash" name="cash" value=""><br>
       <label>${payByCredit}</label>
       <input type="checkbox" id="credit" name="credit" value=""><br>
-      <imput type="submit" name=""</imput>
+      <input type="submit" name=""</input>
       </form>
-
+</div>
             `;
       document.getElementsByClassName("payment")[0].innerHTML = output;
     } else {
       document.getElementsByClassName("payment")[0].innerHTML = "Error";
     }
 
-    document.getElementById("cash").addEventListener("click", function() {
-      document.getElementById("message2").innerHTML = `You selected ${cashChoice}`;
-      
+    document.getElementById("cash").addEventListener("click", function () {
+      document.getElementById(
+        "message2"
+      ).innerHTML = `You selected ${cashChoice}`;
     });
 
-    document.getElementById("credit").addEventListener("click", function() {
-      document.getElementById("message2").innerHTML = `You selected ${creditChoice}`;
-      console.log(creditChoice)
+    document.getElementById("credit").addEventListener("click", function () {
+      document.getElementById(
+        "message2"
+      ).innerHTML = `You selected ${creditChoice}`;
+      console.log(creditChoice);
     });
-
   };
   xhr.open("GET", "http://localhost:3000/payment", true);
   xhr.send();
@@ -220,6 +282,21 @@ function getEndingTransactions() {
       document.getElementsByClassName("ending-transactions")[0].innerHTML =
         "Not Found";
     }
+
+
+
+    document.querySelector("#exit").addEventListener("click", showEndingTransactionsSection);
+  function showEndingTransactionsSection(event) {
+    toggle(document.querySelector("#endingTransactions-section"));
+ hide(document.querySelector(".welcome"));
+    hide(document.querySelector("#options-section"));
+    hide(document.querySelector("#payment-section"));
+    hide(document.querySelector("#food-section"));
+    hide(document.querySelector("#food-section"));
+
+
+  }
+   
   };
   xhr.open("GET", "http://localhost:3000/endingTransactions", true);
   xhr.send();

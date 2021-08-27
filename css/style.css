@@ -5,6 +5,9 @@
   /* font-family: 'Palette Mosaic', cursive; */
 }
 
+.hide {
+  display: none;
+}
 body {
   background-color: #f1bc31;
   font-family: sans-serif;
@@ -82,13 +85,13 @@ body {
   border-radius: 10px;
 }
 
-.food {
+/* .food {
   grid-area: D;
   background-color: #b22222;
   padding: 50px;
   border: 5px solid black;
   border-radius: 10px;
-}
+} */
 
 .running-transactions {
   grid-area: E;
@@ -138,3 +141,13 @@ h4 {
  p {
    background-color: yellow;
  }
+
+#food-section {
+
+  grid-area: D;
+  background-color: #b22222;
+  padding: 50px;
+  border: 5px solid black;
+  border-radius: 10px;
+}
+ 
