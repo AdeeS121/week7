@@ -5,6 +5,14 @@ window.addEventListener("load", getFood);
 window.addEventListener("load", getPayment);
 window.addEventListener("load", getRunningTransactions);
 window.addEventListener("load", getEndingTransactions);
+// window.addEventListener("load", getSumTransactions);
+
+
+// let total = [];
+// let payChoice = [];
+// let currentTransaction = [];
+// let totalTransactions = {};
+
 
 const hide = (elem) => {
   elem.style.display = "none";
@@ -21,8 +29,16 @@ const toggle = (elem) => {
   }
   show(elem);
 };
+ 
 
-hide(document.querySelector("#endingTransactions-section"));
+
+show(document.querySelector(".welcome"));
+show(document.querySelector(".options-section"));
+hide(document.querySelector(".food-section"));
+hide(document.querySelector(".message1"));
+hide(document.querySelector(".payment-section"));
+hide(document.querySelector(".runningTransactions-section"));
+hide(document.querySelector(".endingTransactions-section"));
 
 
 function getTitle() {
@@ -59,7 +75,6 @@ function getGreeting() {
 }
 
 
-
 function getOptions() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -73,42 +88,45 @@ function getOptions() {
       let output = "";
       output += `
       <h3>${selectTransaction}</h3>
-      <div>
-        <form class="" action="" method="post" enctype="text/plain">
 
+        <form class="foods" action="" method="post" enctype="text/plain">
+        
         <label>${startTransactions}</label>
-      <input type="checkbox" id="start" name="start-transactions" value=""><br>
-
-
+        <input type="radio" id="start" name="start" value=""><br>
 
         <label>${currentTransactions}</label>
-        <input type="checkbox" id="current" name="current-transactions" value=""><br>
+        <input type="radio" id="current" name="current" value=""><br>
 
         <label>${exitTransactions}</label>
-        <input type="checkbox" id="exit" name="exit-transacton" value=""><br>
+        <input type="radio" id="exit" name="exit" value=""><br>
 
         <input type="submit" name="">
         </form>
-      </div> 
 
         `;
-      document.getElementsByClassName("options")[0].innerHTML = output;
+      document.getElementsByClassName("options-section")[0].innerHTML = output;
     } else {
-      document.getElementsByClassName("options")[0].innerHTML = "Error";
+      document.getElementsByClassName("options-section")[0].innerHTML = "Error";
     }
 
-    hide(document.querySelector("#food-section"));
     document.querySelector("#start").addEventListener("click", showFoodSection);
     function showFoodSection(event) {
-      show(document.querySelector("#food-section"));
+      show(document.querySelector(".food-section"));
+      show(document.querySelector(".message1"));
     }
 
-    hide(document.querySelector("#runningTransactions-section"));
-    document
-      .querySelector("#current")
-      .addEventListener("click", showRunningTransactionsSection);
+    document.querySelector("#current").addEventListener("click", showRunningTransactionsSection);
     function showRunningTransactionsSection(event) {
-      toggle(document.querySelector("#runningTransactions-section"));
+      show(document.querySelector(".runningTransactions-section"));
+    }
+
+    document.querySelector("#exit").addEventListener("click", showEndingTransactionsSection);
+    function showEndingTransactionsSection(event) {
+      hide(document.querySelector(".food-section"));
+      hide(document.querySelector(".message1"));
+      hide(document.querySelector(".payment-section"));
+ hide(document.querySelector(".runningTransactions-section"));
+ show(document.querySelector(".endingTransactions-section"));
     }
   };
 
@@ -135,8 +153,7 @@ function getFood() {
       let output = "";
       output += `     
  
-<h3>${optionsMessage}</h3>
-<div id="food-section>  
+<h3>${optionsMessage}</h3> 
  
   <form class="" action="" method="post" enctype="text/plain">
   <label>${food1}</label>
@@ -149,38 +166,36 @@ function getFood() {
   <input type="checkbox" id="startPayment" name="startPayment" value=""><br>
   <input type="submit" name="">
   </form>
-   </div>
         `;
 
-      document.getElementById("food").innerHTML = output;
+      document.getElementsByClassName("food-section")[0].innerHTML = output;
     } else {
-      document.getElementsByClassName("food").innerHTML = "Error";
-    }
- 
-    hide(document.querySelector("#payment-section"));
-    document
-      .querySelector("#startPayment")
-      .addEventListener("click", startPaymentSection);
-
-    function startPaymentSection(event) {
-      show(document.querySelector("#payment-section"));
-     hide(document.querySelector("#food-section"));
+      document.getElementsByClassName("food-section").innerHTML = "Error";
     }
 
     document.getElementById("hotdog").addEventListener("click", function () {
-      document.getElementById("message1").innerHTML = `You added a ${choice1}  
+      document.getElementsByClassName("message1")[0].innerHTML = `You added a ${choice1}  
           `;
     });
 
     document.getElementById("soda").addEventListener("click", function () {
-      document.getElementById("message1").innerHTML = `You added a ${choice2}  
+      document.getElementsByClassName("message1")[0].innerHTML = `You added a ${choice2}  
           `;
     });
 
     document.getElementById("chips").addEventListener("click", function () {
-      document.getElementById("message1").innerHTML = `You added ${choice3}
+      document.getElementsByClassName("message1")[0].innerHTML = `You added ${choice3}
           `;
     });
+
+    document.getElementById("startPayment").addEventListener("click", function () {
+      show(document.querySelector(".payment-section"));
+      hide(document.querySelector(".food-section"));
+      hide(document.querySelector(".message1"));
+      // document.getElementsByClassName("message1")[0].innerHTML = `You added ${choice3}
+      //     `;
+    });
+
   };
   xhr.open("GET", "http://localhost:3000/food", true);
   xhr.send();
@@ -207,12 +222,10 @@ function getPayment() {
       output += `
     
 
-<div id="payment-section">  
-
 <h3>${paySection}</h3>
   <h4>${startPayment}</h4><br>
-      <h3>${totalOfTransactions}</h3>
-      <h3>${paymentOption}</h3><br>
+      <h4>${totalOfTransactions}</h4>
+      <h4>${paymentOption}</h4><br>
 
       <form class="" action="" method="post" enctype="text/plain"> 
       <label>${payByCash}</label>
@@ -221,25 +234,28 @@ function getPayment() {
       <input type="checkbox" id="credit" name="credit" value=""><br>
       <input type="submit" name=""</input>
       </form>
-</div>
             `;
-      document.getElementsByClassName("payment")[0].innerHTML = output;
+      document.getElementsByClassName("payment-section")[0].innerHTML = output;
     } else {
-      document.getElementsByClassName("payment")[0].innerHTML = "Error";
+      document.getElementsByClassName("payment-section")[0].innerHTML = "Error";
     }
 
     document.getElementById("cash").addEventListener("click", function () {
-      document.getElementById(
-        "message2"
-      ).innerHTML = `You selected ${cashChoice}`;
+     
+      document.getElementsByClassName(
+        "message1"
+      )[0].innerHTML = `You selected ${cashChoice}`;
+       show(document.querySelector(".message1"));
     });
 
     document.getElementById("credit").addEventListener("click", function () {
-      document.getElementById(
-        "message2"
-      ).innerHTML = `You selected ${creditChoice}`;
+      document.getElementsByClassName(
+        "message1"
+      )[0].innerHTML = `You selected ${creditChoice}`;
       console.log(creditChoice);
     });
+
+
   };
   xhr.open("GET", "http://localhost:3000/payment", true);
   xhr.send();
@@ -254,16 +270,18 @@ function getRunningTransactions() {
       output += `<h3>${runningTransaction.currentTransactionsMsg}</h3><br>
       <div>${runningTransaction.currentTotalAndCashOrCreditPay}</div>`;
 
-      document.getElementsByClassName("running-transactions")[0].innerHTML =
+      document.getElementsByClassName("runningTransactions-section")[0].innerHTML =
         output;
     } else {
-      document.getElementsByClassName("running-transactions")[0].innerHTML =
+      document.getElementsByClassName("runningTransactions-section")[0].innerHTML =
         "Not Found";
     }
   };
   xhr.open("GET", "http://localhost:3000/runningTransactions", true);
   xhr.send();
 }
+
+
 
 function getEndingTransactions() {
   let xhr = new XMLHttpRequest();
@@ -276,26 +294,30 @@ function getEndingTransactions() {
       <h4>${finalTransactions.endingNumberOfTransactions}</h4>
       <h4>${finalTransactions.endingTotalSales}</h4><br>
       <h4>${finalTransactions.endingFarewell}</h4>`;
-      document.getElementsByClassName("ending-transactions")[0].innerHTML =
+      document.getElementsByClassName("endingTransactions-section")[0].innerHTML =
         output;
     } else {
-      document.getElementsByClassName("ending-transactions")[0].innerHTML =
+      document.getElementsByClassName("endingTransactions-section")[0].innerHTML =
         "Not Found";
     }
 
 
 
-    document.querySelector("#exit").addEventListener("click", showEndingTransactionsSection);
-  function showEndingTransactionsSection(event) {
-    toggle(document.querySelector("#endingTransactions-section"));
- hide(document.querySelector(".welcome"));
-    hide(document.querySelector("#options-section"));
-    hide(document.querySelector("#payment-section"));
-    hide(document.querySelector("#food-section"));
-    hide(document.querySelector("#food-section"));
+//     document.querySelector("#exit").addEventListener("click", showEndingTransactionsSection);
+//   function showEndingTransactionsSection(event) {
+//     show(document.querySelector(".endingTransactions-section"));
+//  show(document.querySelector(".welcome"));
+//     // hide(document.querySelector(".options-section"));
+//     // hide(document.querySelector(".payment-section"));
+//     // hide(document.querySelector(".food-section"));
+//     // hide(document.querySelector(".food-section"));
 
+//     show(document.querySelector(".options-section"));
+//     show(document.querySelector(".payment-section"));
+//     show(document.querySelector(".food-section"));
+//     show(document.querySelector(".food-section"));
 
-  }
+//   }
    
   };
   xhr.open("GET", "http://localhost:3000/endingTransactions", true);
