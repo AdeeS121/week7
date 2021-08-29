@@ -5,13 +5,6 @@ window.addEventListener("load", getFood);
 window.addEventListener("load", getPayment);
 window.addEventListener("load", getRunningTransactions);
 window.addEventListener("load", getEndingTransactions);
-// window.addEventListener("load", getSumTransactions);
-
-
-// let total = [];
-// let payChoice = [];
-// let currentTransaction = [];
-// let totalTransactions = {};
 
 
 const hide = (elem) => {
@@ -30,8 +23,6 @@ const toggle = (elem) => {
   show(elem);
 };
  
-
-
 show(document.querySelector(".welcome"));
 show(document.querySelector(".options-section"));
 hide(document.querySelector(".food-section"));
