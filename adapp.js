@@ -23,13 +23,21 @@ const toggle = (elem) => {
   show(elem);
 };
  
+// show(document.querySelector(".welcome"));
+// show(document.querySelector(".options-section"));
+// hide(document.querySelector(".food-section"));
+// hide(document.querySelector(".message1"));
+// hide(document.querySelector(".payment-section"));
+// hide(document.querySelector(".runningTransactions-section"));
+// hide(document.querySelector(".endingTransactions-section"));
+
 show(document.querySelector(".welcome"));
 show(document.querySelector(".options-section"));
-hide(document.querySelector(".food-section"));
-hide(document.querySelector(".message1"));
-hide(document.querySelector(".payment-section"));
-hide(document.querySelector(".runningTransactions-section"));
-hide(document.querySelector(".endingTransactions-section"));
+show(document.querySelector(".food-section"));
+show(document.querySelector(".message1"));
+show(document.querySelector(".payment-section"));
+show(document.querySelector(".runningTransactions-section"));
+show(document.querySelector(".endingTransactions-section"));
 
 
 function getTitle() {
@@ -113,6 +121,8 @@ function getOptions() {
 
     document.querySelector("#exit").addEventListener("click", showEndingTransactionsSection);
     function showEndingTransactionsSection(event) {
+      hide(document.querySelector(".welcome"));
+      hide(document.querySelector(".options-section"));
       hide(document.querySelector(".food-section"));
       hide(document.querySelector(".message1"));
       hide(document.querySelector(".payment-section"));
@@ -191,6 +201,26 @@ function getFood() {
   xhr.open("GET", "http://localhost:3000/food", true);
   xhr.send();
 }
+
+
+let xhr = new XMLHttpRequest()
+xhr.open("POST", "http://localhost:3000/food", true)
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onload = function() {
+  if (xhr.response = 200) {
+    const myStuff = (JSON.parse(xhr.response))
+    console.log(myStuff)
+    document.getElementsByClassName('message')[0] = myStuff.food + myStuff.price;
+  }
+};
+const body = JSON.stringify ({food: "hotdog", price: "4.50"});
+xhr.send(body)
+
+
+
+
+
+
 
 function getPayment() {
   let xhr = new XMLHttpRequest();
