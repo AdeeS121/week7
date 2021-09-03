@@ -2,10 +2,15 @@ window.addEventListener("load", getTitle);
 window.addEventListener("load", getGreeting);
 window.addEventListener("load", getOptions);
 window.addEventListener("load", getFood);
+window.addEventListener("load", getFoodMsg);
 window.addEventListener("load", getPayment);
 window.addEventListener("load", getRunningTransactions);
 window.addEventListener("load", getEndingTransactions);
+
+
 window.addEventListener("load", getFoodData);
+window.addEventListener("load", getPaymentData);
+
 
 const hide = (elem) => {
   elem.style.display = "none";
@@ -23,21 +28,23 @@ const toggle = (elem) => {
   show(elem);
 };
 
-show(document.querySelector(".welcome"));
-show(document.querySelector(".options-section"));
-hide(document.querySelector(".food-section"));
-hide(document.querySelector(".message1"));
-hide(document.querySelector(".payment-section"));
-hide(document.querySelector(".runningTransactions-section"));
-hide(document.querySelector(".endingTransactions-section"));
-
 // show(document.querySelector(".welcome"));
 // show(document.querySelector(".options-section"));
+
 // show(document.querySelector(".food-section"));
-// show(document.querySelector(".message1"));
-// show(document.querySelector(".payment-section"));
-// show(document.querySelector(".runningTransactions-section"));
-// show(document.querySelector(".endingTransactions-section"));
+// hide(document.querySelector(".message1"));
+// hide(document.querySelector(".payment-section"));
+// hide(document.querySelector(".runningTransactions-section"));
+// hide(document.querySelector(".endingTransactions-section"));
+
+
+show(document.querySelector(".welcome"));
+show(document.querySelector(".options-section"));
+show(document.querySelector(".food-section"));
+show(document.querySelector(".message1"));
+show(document.querySelector(".payment-section"));
+show(document.querySelector(".runningTransactions-section"));
+show(document.querySelector(".endingTransactions-section"));
 
 function getTitle() {
   const xhr = new XMLHttpRequest();
@@ -61,7 +68,7 @@ function getGreeting() {
     if (xhr.status == 200) {
       const welcomepage = JSON.parse(xhr.response);
       let output = `
-      <h1>${welcomepage.welcome}</h1>
+      <h1><span class="mulitcolortext">${welcomepage.welcome}</span></h1>
       `;
       document.getElementsByClassName("welcome")[0].innerHTML = output;
     } else {
@@ -76,29 +83,20 @@ function getOptions() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      const transOptions = JSON.parse(xhr.response);
-      selectTransaction = transOptions.selectTransactionMessage;
-      startTransactions = transOptions.startTransaction;
-      currentTransactions = transOptions.currentTransaction;
-      exitTransactions = transOptions.exitTransaction;
+      const transOptions = JSON.parse(xhr.responseText);
+      selectTransaction = transOptions[0].selectTransactionMessage;
+      startTransactions = transOptions[1].startTransaction;
+      currentTransactions = transOptions[2].currentTransaction;
+      exitTransactions = transOptions[3].exitTransaction;
 
       let output = "";
       output += `
-      <h3>${selectTransaction}</h3>
-
-        <form class="foods" action="" method="post" enctype="text/plain">
-        
-        <label>${startTransactions}</label>
-        <input type="radio" id="start" name="start" value=""><br>
-
-        <label>${currentTransactions}</label>
-        <input type="radio" id="current" name="current" value=""><br>
-
-        <label>${exitTransactions}</label>
-        <input type="radio" id="exit" name="exit" value=""><br>
-
-        <input type="submit" name="">
-        </form>
+      <h1><span style="color:blue" new-transaction">${selectTransaction}</span></h1>
+<ul class="transaction-options">
+      <li class="option-one"><span class="trans-one">${startTransactions}</span></li><button class="start">Push here</button>
+      <li class="option-two"><span class="trans-two">${currentTransactions}</span></li><button class="current">Push Me</button>
+      <li class="option-three"><span class="trans-three">${exitTransactions}</span></li><button class="exit">Push Me</button>
+      </ul>
 
         `;
       document.getElementsByClassName("options-section")[0].innerHTML = output;
@@ -106,26 +104,28 @@ function getOptions() {
       document.getElementsByClassName("options-section")[0].innerHTML = "Error";
     }
 
-    document.querySelector("#start").addEventListener("click", showFoodSection);
+    document
+      .getElementsByClassName("start")[0]
+      .addEventListener("click", showFoodSection);
     function showFoodSection(event) {
       show(document.querySelector(".food-section"));
       show(document.querySelector(".message1"));
     }
 
     document
-      .querySelector("#current")
+      .getElementsByClassName("current")[0]
       .addEventListener("click", showRunningTransactionsSection);
     function showRunningTransactionsSection(event) {
       show(document.querySelector(".runningTransactions-section"));
     }
 
     document
-      .querySelector("#exit")
+      .getElementsByClassName("exit")[0]
       .addEventListener("click", showEndingTransactionsSection);
     function showEndingTransactionsSection(event) {
       hide(document.querySelector(".welcome"));
       hide(document.querySelector(".options-section"));
-      hide(document.querySelector(".food-section"));
+      show(document.querySelector(".food-section"));
       hide(document.querySelector(".message1"));
       hide(document.querySelector(".payment-section"));
       hide(document.querySelector(".runningTransactions-section"));
@@ -137,74 +137,97 @@ function getOptions() {
   xhr.send();
 }
 
+function getFoodMsg() {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://localhost:3000/foodmsg");
+  xhr.onload = function () {
+    if (xhr.status == 200) {
+      let foodMsg = JSON.parse(xhr.responseText);
+      foodChoiceSelection = foodMsg.foodOptionMessage;
+
+      let output = "";
+      output += `
+<h1>${foodChoiceSelection}</h1>
+`;
+      document.getElementsByClassName("food-selection-msg")[0].innerHTML = output;
+    }
+  };
+  xhr.send();
+}
+
 function getFood() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      const foodOptions = JSON.parse(xhr.response);
-      optionsMessage = foodOptions.foodOptionSelectMsg;
-      food1 = foodOptions.foodOption1;
-      food2 = foodOptions.foodOption2;
-      food3 = foodOptions.foodOption3;
-      food4 = foodOptions.foodOption4;
+      const foodChoices = JSON.parse(xhr.responseText);
+      foodItemNumber1 = foodChoices[0].item;
+      foodItemNumber2 = foodChoices[1].item;
+      foodItemNumber3 = foodChoices[2].item;
 
-      choice1 = foodOptions.foodOption1.slice(5, 12);
-      choice2 = foodOptions.foodOption2.slice(5, 11);
-      choice3 = foodOptions.foodOption3.slice(5, 12);
-      choice4 = foodOptions.foodOption4;
+      food1 = foodChoices[0].food;
+      food2 = foodChoices[1].food;
+      food3 = foodChoices[2].food;
+
+      foodPrice1 = foodChoices[0].price;
+      foodPrice2 = foodChoices[1].price;
+      foodPrice3 = foodChoices[2].price;
 
       let output = "";
-      output += `     
- 
-<h3>${optionsMessage}</h3> 
- 
-  <form class="" action="" method="post" enctype="text/plain">
-  <label>${food1}</label>
-<input type="checkbox" id="hotdog" name="hotdog" value=""><br>
-  <label>${food2}</label>
-  <input type="checkbox" id="soda" name="soda" value=""><br>
-  <label>${food3}</label>
-  <input type="checkbox" id="chips" name="chips" value=""><br>
-  <label>${food4}</label>
-  <input type="checkbox" id="startPayment" name="startPayment" value=""><br>
-  <input type="submit" name="">
-  </form>
-        `;
 
+      output += `
+  <ul class="food-items-align">
+  <li><span class="food-item-1">${foodItemNumber1} - </span><span class="food-item-1">${food1} - </span><span class="food-item-1">$${foodPrice1}</span></li><button class="food-1">Select</button>
+  <li><span class="food-item-2">${foodItemNumber2} - </span><span class="food-item-2">${food2} - </span><span class="food-item-2">$${foodPrice2}</span></li><button class="food-2">Select</button>
+  <li><span class="food-item-3">${foodItemNumber3} - </span><span class="food-item-3">${food3} - </span><span class="food-item-3">$${foodPrice3}</span></li><button class="food-3">Select</button>
+    </ul> 
+
+    <h3>Start Payment Process</h3><button class="startPayment">Select pay</button>
+  `;
+
+  
+      {
+        /* <button>Add me the Selection</button> */
+      }
       document.getElementsByClassName("food-section")[0].innerHTML = output;
     } else {
-      document.getElementsByClassName("food-section").innerHTML = "Error";
+      document.getElementsByClassName("food-section")[0].innerHTML =
+        "Input Error";
     }
 
-    document.getElementById("hotdog").addEventListener("click", function () {
-      document.getElementsByClassName(
-        "message1"
-      )[0].innerHTML = `You added a ${choice1}  
-          `;
-    });
-
-    document.getElementById("soda").addEventListener("click", function () {
-      document.getElementsByClassName(
-        "message1"
-      )[0].innerHTML = `You added a ${choice2}  
-          `;
-    });
-
-    document.getElementById("chips").addEventListener("click", function () {
-      document.getElementsByClassName(
-        "message1"
-      )[0].innerHTML = `You added ${choice3}
-          `;
-    });
+    document
+      .getElementsByClassName("food-1")[0]
+      .addEventListener("click", function () {
+        document.getElementsByClassName(
+          "message1"
+        )[0].innerHTML = `You added a ${food1}
+                  `;
+      });
 
     document
-      .getElementById("startPayment")
+      .getElementsByClassName("food-2")[0]
       .addEventListener("click", function () {
+        document.getElementsByClassName(
+          "message1"
+        )[0].innerHTML = `You added a ${food2}
+            `;
+      });
+
+    document
+      .getElementsByClassName("food-3")[0]
+      .addEventListener("click", function () {
+        document.getElementsByClassName(
+          "message1"
+        )[0].innerHTML = `You added ${food3}
+                `;
+      });
+
+    document
+      .getElementsByClassName("startPayment")[0].addEventListener("click", function () {
+        hide(document.querySelector(".runningTransactions-section"));
+        hide(document.querySelector(".endingTransactions-section"));
         show(document.querySelector(".payment-section"));
         hide(document.querySelector(".food-section"));
         hide(document.querySelector(".message1"));
-        // document.getElementsByClassName("message1")[0].innerHTML = `You added ${choice3}
-        //     `;
       });
   };
   xhr.open("GET", "http://localhost:3000/food", true);
@@ -212,16 +235,16 @@ function getFood() {
 }
 
 function getFoodData() {
+  let data = JSON.stringify({"food": "foodItem", "price": "foodPrice"})
   let xhr = new XMLHttpRequest();
-
-  let json = JSON.stringify({
-    food: "foodItem",
-    price: "foodPricie",
-  });
-
-  xhr.open("POST", "http://localhost:3000/food");
-  xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
-  xhr.send(json);
+  xhr.onload = function () {
+    if ((xhr.status = 200)) {
+      console.log(this.responseText)
+    }
+  };
+  xhr.open("POST", "http://localhost:3000/food", true);
+  xhr.setRequestHeader("Content-Type", "application/json")
+  xhr.send(data);
 }
 
 function getPayment() {
@@ -281,6 +304,20 @@ function getPayment() {
   xhr.send();
 }
 
+function getPaymentData() {
+  let data = JSON.stringify({"payment1": "foodItem", "payment2": "foodPrice"})
+  let xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if ((xhr.status = 200)) {
+      console.log(this.responseText)
+    }
+  };
+  xhr.open("POST", "http://localhost:3000/payment", true);
+  xhr.setRequestHeader("Content-Type", "application/json")
+  xhr.send(data);
+}
+
+
 function getRunningTransactions() {
   let xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -322,7 +359,6 @@ function getEndingTransactions() {
         "endingTransactions-section"
       )[0].innerHTML = "Not Found";
     }
-  
   };
   xhr.open("GET", "http://localhost:3000/endingTransactions", true);
   xhr.send();
